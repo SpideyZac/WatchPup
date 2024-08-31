@@ -1,0 +1,14 @@
+{
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.detectIndentation": false,
+
+    "eslint.validate": ["javascript", "typescript"],
+    "prettier.configPath": "",
+    "editor.wordWrap": "on",
+
+    "[handlebars]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    }
+}

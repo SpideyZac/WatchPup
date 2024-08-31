@@ -1,0 +1,8 @@
+{
+    "semi": true,
+    "trailingComma": "all",
+    "tabWidth": 4,
+    "useTabs": false,
+    "singleQuote": false,
+    "plugins": ["eslint-plugin-prettier", "prettier-plugin-organize-imports"]
+}

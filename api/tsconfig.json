@@ -1,0 +1,60 @@
+{
+    "compilerOptions": {
+        "paths": {
+            "#constants": ["./src/constants"],
+            "#constants/*": ["./src/constants/*"],
+
+            "#controllers": ["./src/controllers"],
+            "#controllers/*": ["./src/controllers/*"],
+
+            "#helpers": ["./src/helpers"],
+            "#helpers/*": ["./src/helpers/*"],
+
+            "#middlewares": ["./src/middlewares"],
+            "#middlewares/*": ["./src/middlewares/*"],
+
+            "#models": ["./src/models"],
+            "#models/*": ["./src/models/*"],
+
+            "#routes": ["./src/routes"],
+            "#routes/*": ["./src/routes/*"],
+
+            "#schemas": ["./src/schemas"],
+            "#schemas/*": ["./src/schemas/*"],
+
+            "#stores": ["./src/schemas"],
+            "#stores/*": ["./src/schemas/*"],
+
+            "#types": ["./src/types"],
+            "#types/*": ["./src/types/*"],
+
+            "#utils": ["./src/utils"],
+            "#utils/*": ["./src/utils/*"]
+        },
+
+        // Enable latest features
+        "lib": ["ESNext", "DOM"],
+        "target": "ES2015",
+        "module": "ESNext",
+        "moduleDetection": "force",
+        "allowJs": true,
+
+        // Bundler mode
+        "moduleResolution": "bundler",
+        "verbatimModuleSyntax": true,
+
+        // Best practices
+        "strict": true,
+        "skipLibCheck": true,
+        "noFallthroughCasesInSwitch": true,
+        "forceConsistentCasingInFileNames": true,
+
+        // Some stricter flags (disabled by default)
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
+        "noPropertyAccessFromIndexSignature": false,
+
+        "outDir": "./dist"
+    },
+    "exclude": ["eslint.config.js"]
+}
