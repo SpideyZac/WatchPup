@@ -5,11 +5,15 @@ export async function hashPassword(password: string): Promise<string> {
     return await Bun.password.hash(password);
 }
 
-export async function createUserData(email: string, password: string, username: string): Promise<Optional<User, "id">> {
+export async function createUserData(
+    email: string,
+    password: string,
+    username: string,
+): Promise<Optional<Optional<User, "id">, "created_at">> {
     return {
         email,
         password: await hashPassword(password),
         username,
-        created_at: new Date(),
+        verified: false,
     };
 }

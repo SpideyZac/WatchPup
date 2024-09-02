@@ -15,7 +15,7 @@ export async function find(conditions: string[], parameters: { [key: string]: an
     return await queryOne<User>(`SELECT * FROM users WHERE ${conditions.join(" AND ")}`, parameters);
 }
 
-export async function create(user: Optional<User, "id">) {
+export async function create(user: Optional<Optional<User, "id">, "created_at">) {
     return await queryOne<User>("CREATE user CONTENT $content", {
         content: {
             email: user.email,
