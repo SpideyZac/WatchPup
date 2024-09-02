@@ -15,19 +15,14 @@ export async function connect() {
     });
 }
 
-export async function query_one<T>(
+export async function queryOne<T>(
     query: string,
-    params?: { [k: string]: any }, // eslint-disable-line
-): Promise<T[] | null> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    params?: { [k: string]: any },
+): Promise<T[]> {
     if (query.includes(";")) {
-        throw new Error("query_one does not support multiple queries");
+        throw new Error("queryOne does not support multiple queries");
     }
-    let result;
-    try {
-        result = await db.query<T[][]>(query, params);
-    } catch (error) {
-        console.error(error);
-        return null;
-    }
+    const result = await db.query<T[][]>(query, params);
     return result[0];
 }

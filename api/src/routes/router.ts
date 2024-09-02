@@ -1,5 +1,7 @@
 import { Router } from "express";
 
-const router = Router();
+import { signup } from "#controllers/signup.controller";
 
-export default router;
+export const router = Router();
+
+router.use("/signup", signup);

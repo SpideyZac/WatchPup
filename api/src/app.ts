@@ -1,7 +1,7 @@
 import cookieParser from "cookie-parser";
 import express from "express";
 
-import AppRouter from "#routes/router";
+import { router } from "#routes/router";
 import { connect } from "#utils/db.utils";
 
 declare module "bun" {
@@ -21,7 +21,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/api", AppRouter);
+app.use("/api", router);
 
 const PORT = process.env.PORT || 8080;
 
