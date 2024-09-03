@@ -1,7 +1,7 @@
 import { Router } from "express";
 
-import { signup } from "#controllers/signup.controller";
+import { router as authRouter } from "./auth.route";
 
 export const router = Router();
 
-router.use("/signup", signup);
+router.use("/auth", authRouter);

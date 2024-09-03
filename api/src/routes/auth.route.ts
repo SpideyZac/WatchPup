@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { signup } from "#controllers/signup.controller";
+import { signup } from "#controllers/auth.controller";
 import { validateData } from "#middlewares/validate.middleware";
 import { SignupScheme } from "../schemes/signup.scheme";
 

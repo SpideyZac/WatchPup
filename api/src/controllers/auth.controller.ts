@@ -3,7 +3,7 @@ import type { Request, Response } from "express";
 import { queryOne } from "#utils/db.utils";
 import type { User } from "#models/user.model";
 import { create } from "#utils/database/user.database.utils";
-import { createUserData } from "#helpers/signup.helper";
+import { createUserData } from "#helpers/auth.helper";
 
 export async function signup(req: Request, res: Response) {
     const { email, password, username } = req.body;
