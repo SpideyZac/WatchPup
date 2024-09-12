@@ -2,7 +2,7 @@ import cookieParser from "cookie-parser";
 import express from "express";
 
 import { router } from "#routes/router";
-import { connect } from "#utils/db.utils";
+import { connect } from "#utils/db.util";
 
 declare module "bun" {
     interface Env {
@@ -13,6 +13,7 @@ declare module "bun" {
         DB_DATABASE: string;
         DB_USER: string;
         DB_PASSWORD: string;
+        JWT_SECRET: string;
     }
 }
 
