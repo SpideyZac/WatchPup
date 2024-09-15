@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 import type { User } from "#models/user.model";
-import { getById } from "./db.util";
+import { getById } from "#utils/db.util";
 
 export function getUserFromAccessToken(token: string): Promise<User | null> {
     return new Promise((resolve) => {
