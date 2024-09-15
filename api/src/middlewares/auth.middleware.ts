@@ -2,7 +2,7 @@ import type { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
 import type { User } from "#models/user.model";
-import { queryOne } from "#utils/db.util";
+import { getById } from "#utils/db.util";
 
 export async function authMiddleware(
     req: Request,
@@ -23,10 +23,8 @@ export async function authMiddleware(
         const decoded = jwt.verify(token, process.env.JWT_SECRET) as {
             id: string;
         };
-        const user = await queryOne<User>("SELECT * FROM $id", {
-            id: decoded.id,
-        });
-        if (user.length === 0) {
+        const user = await getById<User>(decoded.id);
+        if (!user) {
             return res.status(401).json({ message: "Unauthorized" });
         }
 

@@ -5,17 +5,15 @@ import {
     createUserData,
     generateAccessToken,
 } from "#helpers/auth.helper";
-import type { User } from "#models/user.model";
-import { create } from "#utils/database/user.database.util";
-import { queryOne } from "#utils/db.util";
+import { create, find } from "#utils/database/user.database.util";
 
 export async function signup(req: Request, res: Response) {
     const { email, password, username } = req.body;
 
-    const foundUser = await queryOne<User>(
-        "SELECT * FROM user WHERE email = $email OR username = $username",
-        { email, username },
-    );
+    const foundUser = await find("email = $email OR username = $username", {
+        email,
+        username,
+    });
     if (foundUser.length > 0) {
         return res.status(400).json({
             message: "User with that email or username already exists",
@@ -35,10 +33,10 @@ export async function signup(req: Request, res: Response) {
 export async function login(req: Request, res: Response) {
     const { user, password } = req.body;
 
-    const foundUser = await queryOne<User>(
-        "SELECT * FROM user WHERE email = $email OR username = $username",
-        { email: user, username: user },
-    );
+    const foundUser = await find("email = $email OR username = $username", {
+        email: user,
+        username: user,
+    });
     if (foundUser.length === 0) {
         return res
             .status(400)

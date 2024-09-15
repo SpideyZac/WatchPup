@@ -26,3 +26,7 @@ export async function queryOne<T>(
     const result = await db.query<T[][]>(query, params);
     return result[0];
 }
+
+export async function getById<T>(id: string): Promise<T | undefined> {
+    return (await queryOne<T>(`SELECT * FROM $id`, { id }))[0];
+}
