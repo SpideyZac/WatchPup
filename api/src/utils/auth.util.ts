@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 import type { User } from "#models/user.model";
-import { queryOne } from "./db.util";
+import { getById } from "./db.util";
 
 export function getUserFromAccessToken(token: string): Promise<User | null> {
     return new Promise((resolve) => {
@@ -10,14 +10,12 @@ export function getUserFromAccessToken(token: string): Promise<User | null> {
                 return resolve(null);
             }
 
-            const user = await queryOne<User>("SELECT * FROM $id", {
-                id: decoded,
-            });
-            if (user.length === 0) {
+            const user = await getById<User>(decoded as string);
+            if (!user) {
                 return resolve(null);
             }
 
-            resolve(user[0]);
+            resolve(user);
         });
     });
 }
