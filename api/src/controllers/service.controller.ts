@@ -5,6 +5,7 @@ import { getUserFromAccessToken } from "#utils/auth.util";
 import {
     createOwnsService,
     createService,
+    getOwnedServicesByUser,
 } from "#utils/database/service.database.util";
 
 export async function create(req: Request, res: Response) {
@@ -35,4 +36,13 @@ export async function create(req: Request, res: Response) {
     }
 
     return res.status(201).json({ message: "Service created successfully" });
+}
+
+export async function getOwned(req: Request, res: Response) {
+    const user = (await getUserFromAccessToken(
+        (req.headers.authorization as string).split(" ")[1],
+    )) as User;
+
+    const services = await getOwnedServicesByUser(user);
+    return res.status(200).json({ services });
 }

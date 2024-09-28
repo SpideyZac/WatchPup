@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { create } from "#controllers/service.controller";
+import { create, getOwned } from "#controllers/service.controller";
 import { authMiddleware } from "#middlewares/auth.middleware";
 import { validateData } from "#middlewares/validate.middleware";
 import { CreateServiceScheme } from "#schemas/service.scheme";
@@ -13,3 +13,5 @@ router.post(
     authMiddleware,
     create,
 );
+
+router.get("/owned", authMiddleware, getOwned);
