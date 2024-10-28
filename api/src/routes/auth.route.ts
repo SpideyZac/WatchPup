@@ -11,7 +11,7 @@ router.post(
     "/signup",
     validateData(SignupScheme),
     rateLimit({
-        windowMs: 60 * 60 * 1000,
+        windowMs: 5 * 60 * 1000,
         limit: 1,
         standardHeaders: true,
         legacyHeaders: false,
