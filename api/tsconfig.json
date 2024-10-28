@@ -1,9 +1,6 @@
 {
     "compilerOptions": {
         "paths": {
-            "#constants": ["./src/constants"],
-            "#constants/*": ["./src/constants/*"],
-
             "#controllers": ["./src/controllers"],
             "#controllers/*": ["./src/controllers/*"],
 
@@ -21,9 +18,6 @@
 
             "#schemas": ["./src/schemas"],
             "#schemas/*": ["./src/schemas/*"],
-
-            "#stores": ["./src/schemas"],
-            "#stores/*": ["./src/schemas/*"],
 
             "#types": ["./src/types"],
             "#types/*": ["./src/types/*"],
