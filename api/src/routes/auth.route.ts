@@ -18,9 +18,14 @@ router.post(
     }),
     signup,
 );
-router.post("/login", validateData(LoginScheme), rateLimit({
-    windowMs: 60 * 1000,
-    limit: 1,
-    standardHeaders: true,
-    legacyHeaders: false,
-}), login);
+router.post(
+    "/login",
+    validateData(LoginScheme),
+    rateLimit({
+        windowMs: 60 * 1000,
+        limit: 1,
+        standardHeaders: true,
+        legacyHeaders: false,
+    }),
+    login,
+);
