@@ -15,6 +15,9 @@ router.post(
         limit: 1,
         standardHeaders: true,
         legacyHeaders: false,
+        validate: {
+            ip: false,
+        },
     }),
     signup,
 );
@@ -26,6 +29,9 @@ router.post(
         limit: 1,
         standardHeaders: true,
         legacyHeaders: false,
+        validate: {
+            ip: false,
+        },
     }),
     login,
 );

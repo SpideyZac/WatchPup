@@ -17,6 +17,9 @@ router.post(
         limit: 1,
         standardHeaders: true,
         legacyHeaders: false,
+        validate: {
+            ip: false,
+        },
     }),
     create,
 );
@@ -29,6 +32,9 @@ router.get(
         limit: 5,
         standardHeaders: true,
         legacyHeaders: false,
+        validate: {
+            ip: false,
+        },
     }),
     getOwned,
 );
