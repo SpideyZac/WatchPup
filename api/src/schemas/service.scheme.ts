@@ -14,6 +14,6 @@ export const CreateServiceScheme = z.object({
         z.literal("TRACE"),
         z.literal("PATCH"),
     ]),
-    name: z.string(),
-    url: z.string().url(),
+    name: z.string().min(3).max(35),
+    url: z.string().url().max(255),
 });
