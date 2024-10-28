@@ -7,12 +7,20 @@ import {
     createService,
     getOwnedServicesByUser,
 } from "#utils/database/service.database.util";
+import { config } from "#utils/config.util";
 
 export async function create(req: Request, res: Response) {
     const user = (await getUserFromAccessToken(
         (req.headers.authorization as string).split(" ")[1],
     )) as User;
     const { body, headers, method, name, url } = req.body;
+
+    const services = await getOwnedServicesByUser(user);
+    if (services.length >= config.services.maxServices) {
+        return res.status(400).json({
+            message: `User has reached the maximum number of services (${config.services.maxServices})`,
+        });
+    }
 
     const service = await createService({
         body,
