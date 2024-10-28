@@ -1,0 +1,1 @@
+surreal start --user root --pass root rocksdb:watchpupdb.db
