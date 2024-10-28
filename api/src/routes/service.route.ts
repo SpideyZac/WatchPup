@@ -13,7 +13,7 @@ router.post(
     validateData(CreateServiceScheme),
     authMiddleware,
     rateLimit({
-        windowMs: 5 * 60 * 1000,
+        windowMs: 5 * 1000,
         limit: 1,
         standardHeaders: true,
         legacyHeaders: false,
@@ -26,7 +26,7 @@ router.get(
     authMiddleware,
     rateLimit({
         windowMs: 1000,
-        limit: 1,
+        limit: 5,
         standardHeaders: true,
         legacyHeaders: false,
     }),
