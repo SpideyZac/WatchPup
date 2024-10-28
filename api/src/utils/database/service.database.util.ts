@@ -21,11 +21,9 @@ export async function createService(
 export async function createOwnsService(
     ownsService: Optional<OwnsService, "id">,
 ) {
-    return await queryOne<OwnsService>("CREATE owns_service CONTENT $content", {
-        content: {
-            in: ownsService.in,
-            out: ownsService.out,
-        },
+    return await queryOne<OwnsService>("RELATE $in->owns_service->$out", {
+        in: ownsService.in,
+        out: ownsService.out,
     });
 }
 
