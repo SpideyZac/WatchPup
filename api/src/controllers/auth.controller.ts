@@ -61,6 +61,10 @@ export async function login(req: Request, res: Response) {
             .json({ message: "Invalid username, email, or password" });
     }
 
+    if (!dbUser.verified) {
+        return res.status(400).json({ message: "User is not verified" });
+    }
+
     const accessToken = generateAccessToken(dbUser, "1d");
 
     return res
