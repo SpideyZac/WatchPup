@@ -2,12 +2,12 @@ import type { Request, Response } from "express";
 
 import type { User } from "#models/user.model";
 import { getUserFromAccessToken } from "#utils/auth.util";
+import { config } from "#utils/config.util";
 import {
     createOwnsService,
     createService,
     getOwnedServicesByUser,
 } from "#utils/database/service.database.util";
-import { config } from "#utils/config.util";
 
 export async function create(req: Request, res: Response) {
     const user = (await getUserFromAccessToken(

@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { rateLimit } from "express-rate-limit";
 
 import { create, getOwned } from "#controllers/service.controller";
 import { authMiddleware } from "#middlewares/auth.middleware";
@@ -11,7 +12,23 @@ router.post(
     "/create",
     validateData(CreateServiceScheme),
     authMiddleware,
+    rateLimit({
+        windowMs: 5 * 60 * 1000,
+        limit: 1,
+        standardHeaders: true,
+        legacyHeaders: false,
+    }),
     create,
 );
 
-router.get("/owned", authMiddleware, getOwned);
+router.get(
+    "/owned",
+    authMiddleware,
+    rateLimit({
+        windowMs: 1000,
+        limit: 1,
+        standardHeaders: true,
+        legacyHeaders: false,
+    }),
+    getOwned,
+);
