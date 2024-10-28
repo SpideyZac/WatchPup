@@ -10,6 +10,8 @@ import { create } from "#utils/database/user.database.util";
 import { queryOne } from "#utils/db.util";
 
 export async function signup(req: Request, res: Response) {
+    // TODO: Verify email
+
     const { email, password, username } = req.body;
 
     const foundUser = await queryOne<User>(

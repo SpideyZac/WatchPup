@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { rateLimit } from "express-rate-limit";
 
 import { login, signup } from "#controllers/auth.controller";
 import { validateData } from "#middlewares/validate.middleware";
@@ -6,5 +7,20 @@ import { LoginScheme, SignupScheme } from "#schemas/auth.scheme";
 
 export const router = Router();
 
-router.post("/signup", validateData(SignupScheme), signup);
-router.post("/login", validateData(LoginScheme), login);
+router.post(
+    "/signup",
+    validateData(SignupScheme),
+    rateLimit({
+        windowMs: 60 * 60 * 1000,
+        limit: 1,
+        standardHeaders: true,
+        legacyHeaders: false,
+    }),
+    signup,
+);
+router.post("/login", validateData(LoginScheme), rateLimit({
+    windowMs: 60 * 1000,
+    limit: 1,
+    standardHeaders: true,
+    legacyHeaders: false,
+}), login);
