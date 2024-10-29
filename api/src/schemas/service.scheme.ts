@@ -1,8 +1,6 @@
 import { z } from "zod";
 
 export const CreateServiceScheme = z.object({
-    body: z.object({}),
-    headers: z.object({}),
     method: z.union([
         z.literal("GET"),
         z.literal("HEAD"),

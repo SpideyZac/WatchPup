@@ -11,8 +11,6 @@ export async function createService(
 ) {
     return await queryOne<Service>("CREATE service CONTENT $content", {
         content: {
-            body: service.body,
-            headers: service.headers,
             method: service.method,
             name: service.name,
             url: service.url,

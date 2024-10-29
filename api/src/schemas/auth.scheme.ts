@@ -7,6 +7,6 @@ export const SignupScheme = z.object({
 });
 
 export const LoginScheme = z.object({
-    user: z.string().max(16),
+    user: z.string().max(255),
     password: z.string().max(255),
 });
