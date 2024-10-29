@@ -1,5 +1,5 @@
 import jwt, { type JwtPayload } from "jsonwebtoken";
-import { RecordId } from "surrealdb.js";
+import { RecordId } from "surrealdb";
 
 import type { User } from "#models/user.model";
 import { getById } from "#utils/db.util";

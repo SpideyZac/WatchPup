@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { RecordId } from "surrealdb.js";
+import { RecordId } from "surrealdb";
 
 import type { User } from "#models/user.model";
 import { getById } from "#utils/db.util";

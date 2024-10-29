@@ -1,4 +1,4 @@
-import { RecordId } from "surrealdb.js";
+import { RecordId } from "surrealdb";
 
 import type { OwnsService } from "#models/owns_service.model";
 import type { Service } from "#models/service.model";

@@ -1,4 +1,4 @@
-import { RecordId } from "surrealdb.js";
+import { RecordId } from "surrealdb";
 
 export type Request = {
     id: RecordId;

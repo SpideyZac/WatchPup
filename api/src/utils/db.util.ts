@@ -1,4 +1,4 @@
-import { RecordId, Surreal } from "surrealdb.js";
+import { RecordId, Surreal } from "surrealdb";
 
 export const db = new Surreal();
 
