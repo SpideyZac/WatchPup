@@ -1,5 +1,7 @@
+import { RecordId } from "surrealdb.js";
+
 export type Service = {
-    id: string;
+    id: RecordId;
     body: { [key: string]: string };
     created_at: Date;
     headers: { [key: string]: string };

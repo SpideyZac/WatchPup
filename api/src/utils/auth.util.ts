@@ -1,4 +1,5 @@
-import jwt from "jsonwebtoken";
+import jwt, { type JwtPayload } from "jsonwebtoken";
+import { RecordId } from "surrealdb.js";
 
 import type { User } from "#models/user.model";
 import { getById } from "#utils/db.util";
@@ -10,7 +11,7 @@ export function getUserFromAccessToken(token: string): Promise<User | null> {
                 return resolve(null);
             }
 
-            const user = await getById<User>(decoded as string);
+            const user = await getById<User>(new RecordId("user", ((decoded as JwtPayload).id as string).split(":")[1]));
             if (!user) {
                 return resolve(null);
             }

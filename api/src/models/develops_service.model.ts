@@ -1,9 +1,11 @@
+import { RecordId } from "surrealdb.js";
+
 import type { Service } from "#models/service.model";
 import type { User } from "#models/user.model";
 
 export type DevelopsService = {
-    id: string;
+    id: RecordId;
     can_edit: boolean;
-    in: User | string;
-    out: Service | string;
+    in: User | RecordId;
+    out: Service | RecordId;
 };

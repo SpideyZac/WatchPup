@@ -1,4 +1,4 @@
-import { Surreal } from "surrealdb.js";
+import { RecordId, Surreal } from "surrealdb.js";
 
 export const db = new Surreal();
 
@@ -27,6 +27,6 @@ export async function queryOne<T>(
     return result[0];
 }
 
-export async function getById<T>(id: string): Promise<T | undefined> {
+export async function getById<T>(id: RecordId): Promise<T | undefined> {
     return (await queryOne<T>(`SELECT * FROM $id`, { id }))[0];
 }
