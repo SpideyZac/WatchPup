@@ -11,7 +11,12 @@ export function getUserFromAccessToken(token: string): Promise<User | null> {
                 return resolve(null);
             }
 
-            const user = await getById<User>(new RecordId("user", ((decoded as JwtPayload).id as string).split(":")[1]));
+            const user = await getById<User>(
+                new RecordId(
+                    "user",
+                    ((decoded as JwtPayload).id as string).split(":")[1],
+                ),
+            );
             if (!user) {
                 return resolve(null);
             }

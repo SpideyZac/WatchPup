@@ -1,5 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
+import { RecordId } from "surrealdb.js";
 
 import type { User } from "#models/user.model";
 import { getById } from "#utils/db.util";
@@ -23,7 +24,9 @@ export async function authMiddleware(
         const decoded = jwt.verify(token, process.env.JWT_SECRET) as {
             id: string;
         };
-        const user = await getById<User>(decoded.id);
+        const user = await getById<User>(
+            new RecordId("user", decoded.id.split(":")[1]),
+        );
         if (!user) {
             return res.status(401).json({ message: "Unauthorized" });
         }
