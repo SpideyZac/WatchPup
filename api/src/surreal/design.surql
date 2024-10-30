@@ -5,16 +5,6 @@
 OPTION IMPORT;
 
 -- ------------------------------
--- TABLE: develops_service
--- ------------------------------
-
-DEFINE TABLE develops_service TYPE RELATION IN user OUT service SCHEMAFULL PERMISSIONS NONE;
-
-DEFINE FIELD can_edit ON develops_service TYPE bool PERMISSIONS FULL;
-DEFINE FIELD in ON develops_service TYPE record<user> PERMISSIONS FULL;
-DEFINE FIELD out ON develops_service TYPE record<service> PERMISSIONS FULL;
-
--- ------------------------------
 -- TABLE: owns_service
 -- ------------------------------
 
