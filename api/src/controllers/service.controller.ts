@@ -6,8 +6,41 @@ import { config } from "#utils/config.util";
 import {
     createOwnsService,
     createService,
+    deleteService,
     getOwnedServicesByUser,
 } from "#utils/database/service.database.util";
+import { getById } from "#utils/db.util";
+import { createStandardError } from "#utils/standard.util";
+
+export async function getService(req: Request, res: Response) {
+    const user = (await getUserFromAccessToken(
+        (req.headers.authorization as string).split(" ")[1],
+    )) as User;
+    const { serviceId } = req.body;
+
+    const service = await getById(serviceId);
+    if (!service) {
+        return res.status(400).json(createStandardError("Service not found"));
+    }
+
+    const services = await getOwnedServicesByUser(user);
+    if (!services.find((service) => service.id.id == serviceId.id)) {
+        return res
+            .status(400)
+            .json(createStandardError("User does not own service"));
+    }
+
+    return res.status(200).json({ service });
+}
+
+export async function getOwned(req: Request, res: Response) {
+    const user = (await getUserFromAccessToken(
+        (req.headers.authorization as string).split(" ")[1],
+    )) as User;
+
+    const services = await getOwnedServicesByUser(user);
+    return res.status(200).json({ services });
+}
 
 export async function create(req: Request, res: Response) {
     const user = (await getUserFromAccessToken(
@@ -28,7 +61,9 @@ export async function create(req: Request, res: Response) {
         url,
     });
     if (!service) {
-        return res.status(500).json({ message: "Failed to create service" });
+        return res
+            .status(500)
+            .json(createStandardError("Failed to create service"));
     }
 
     const ownsService = await createOwnsService({
@@ -38,17 +73,29 @@ export async function create(req: Request, res: Response) {
     if (!ownsService) {
         return res
             .status(500)
-            .json({ message: "Failed to create owns_service" });
+            .json(
+                createStandardError(
+                    "Failed to create owns_service relationship",
+                ),
+            );
     }
 
     return res.status(201).json({ message: "Service created successfully" });
 }
 
-export async function getOwned(req: Request, res: Response) {
+export async function deleteOwnedService(req: Request, res: Response) {
     const user = (await getUserFromAccessToken(
         (req.headers.authorization as string).split(" ")[1],
     )) as User;
+    const { serviceId } = req.body;
 
     const services = await getOwnedServicesByUser(user);
-    return res.status(200).json({ services });
+    if (!services.find((service) => service.id.id == serviceId.id)) {
+        return res
+            .status(400)
+            .json(createStandardError("User does not own service"));
+    }
+
+    await deleteService(serviceId);
+    return res.status(200).json({ message: "Service deleted successfully" });
 }

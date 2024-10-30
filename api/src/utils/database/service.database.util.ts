@@ -6,6 +6,20 @@ import type { User } from "#models/user.model";
 import type { Optional } from "#types/optional.types";
 import { getById, queryOne } from "#utils/db.util";
 
+export async function getOwnedServicesByUser(user: User) {
+    const ownedServices = await queryOne<OwnsService>(
+        "SELECT * FROM owns_service WHERE in = $id",
+        { id: user.id },
+    );
+    const serviceIds = ownedServices.map((service) => service.out);
+    const services = [];
+    for (const id of serviceIds) {
+        const service = (await getById<Service>(id as RecordId)) as Service;
+        services.push(service);
+    }
+    return services;
+}
+
 export async function createService(
     service: Optional<Optional<Service, "id">, "created_at">,
 ) {
@@ -27,16 +41,8 @@ export async function createOwnsService(
     });
 }
 
-export async function getOwnedServicesByUser(user: User) {
-    const ownedServices = await queryOne<OwnsService>(
-        "SELECT * FROM owns_service WHERE in = $id",
-        { id: user.id },
-    );
-    const serviceIds = ownedServices.map((service) => service.out);
-    const services = [];
-    for (const id of serviceIds) {
-        const service = await getById<Service>(id as RecordId);
-        services.push(service);
-    }
-    return services;
+export async function deleteService(serviceId: RecordId) {
+    return await queryOne<Service>("DELETE service WHERE id=$id", {
+        id: serviceId,
+    });
 }

@@ -15,3 +15,11 @@ export const CreateServiceScheme = z.object({
     name: z.string().min(3).max(35),
     url: z.string().url().max(255),
 });
+
+export const GetServiceScheme = z.object({
+    serviceId: z.string().max(255),
+});
+
+export const DeleteServiceScheme = z.object({
+    serviceId: z.string().max(255),
+});

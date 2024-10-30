@@ -1,32 +1,25 @@
 import { Router } from "express";
 import { rateLimit } from "express-rate-limit";
 
-import { create, getOwned } from "#controllers/service.controller";
+import {
+    create,
+    deleteOwnedService,
+    getOwned,
+    getService,
+} from "#controllers/service.controller";
 import { authMiddleware } from "#middlewares/auth.middleware";
+import { createRecordId } from "#middlewares/id.middleware";
 import { validateData } from "#middlewares/validate.middleware";
-import { CreateServiceScheme } from "#schemas/service.scheme";
+import {
+    CreateServiceScheme,
+    DeleteServiceScheme,
+    GetServiceScheme,
+} from "#schemas/service.scheme";
 
 export const router = Router();
 
-router.post(
-    "/create",
-    validateData(CreateServiceScheme),
-    authMiddleware,
-    rateLimit({
-        windowMs: 5 * 1000,
-        limit: 1,
-        standardHeaders: true,
-        legacyHeaders: false,
-        validate: {
-            ip: false,
-        },
-    }),
-    create,
-);
-
 router.get(
-    "/owned",
-    authMiddleware,
+    "/",
     rateLimit({
         windowMs: 1000,
         limit: 5,
@@ -36,5 +29,55 @@ router.get(
             ip: false,
         },
     }),
+    validateData(GetServiceScheme),
+    authMiddleware,
+    getService,
+);
+
+router.get(
+    "/owned",
+    rateLimit({
+        windowMs: 1000,
+        limit: 5,
+        standardHeaders: true,
+        legacyHeaders: false,
+        validate: {
+            ip: false,
+        },
+    }),
+    authMiddleware,
     getOwned,
+);
+
+router.post(
+    "/",
+    rateLimit({
+        windowMs: 5 * 1000,
+        limit: 1,
+        standardHeaders: true,
+        legacyHeaders: false,
+        validate: {
+            ip: false,
+        },
+    }),
+    validateData(CreateServiceScheme),
+    authMiddleware,
+    create,
+);
+
+router.delete(
+    "/",
+    rateLimit({
+        windowMs: 5 * 1000,
+        limit: 1,
+        standardHeaders: true,
+        legacyHeaders: false,
+        validate: {
+            ip: false,
+        },
+    }),
+    validateData(DeleteServiceScheme),
+    authMiddleware,
+    createRecordId(["serviceId"]),
+    deleteOwnedService,
 );

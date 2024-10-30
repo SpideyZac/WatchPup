@@ -4,6 +4,7 @@ import { RecordId } from "surrealdb";
 
 import type { User } from "#models/user.model";
 import { getById } from "#utils/db.util";
+import { createStandardError } from "#utils/standard.util";
 
 export async function authMiddleware(
     req: Request,
@@ -12,12 +13,12 @@ export async function authMiddleware(
 ) {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
-        return res.status(401).json({ message: "Unauthorized" });
+        return res.status(401).json(createStandardError("Unauthorized"));
     }
 
     const token = authHeader.split(" ")[1];
     if (!token) {
-        return res.status(401).json({ message: "Unauthorized" });
+        return res.status(401).json(createStandardError("Unauthorized"));
     }
 
     try {
@@ -28,11 +29,11 @@ export async function authMiddleware(
             new RecordId("user", decoded.id.split(":")[1]),
         );
         if (!user) {
-            return res.status(401).json({ message: "Unauthorized" });
+            return res.status(401).json(createStandardError("Unauthorized"));
         }
 
         next();
     } catch {
-        return res.status(401).json({ message: "Unauthorized" });
+        return res.status(401).json(createStandardError("Unauthorized"));
     }
 }

@@ -9,7 +9,6 @@ export const router = Router();
 
 router.post(
     "/signup",
-    validateData(SignupScheme),
     rateLimit({
         windowMs: 5 * 1000,
         limit: 1,
@@ -19,11 +18,11 @@ router.post(
             ip: false,
         },
     }),
+    validateData(SignupScheme),
     signup,
 );
 router.post(
     "/login",
-    validateData(LoginScheme),
     rateLimit({
         windowMs: 1000,
         limit: 1,
@@ -33,5 +32,6 @@ router.post(
             ip: false,
         },
     }),
+    validateData(LoginScheme),
     login,
 );
