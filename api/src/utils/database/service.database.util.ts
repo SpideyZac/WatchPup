@@ -41,6 +41,33 @@ export async function createOwnsService(
     });
 }
 
+export async function editService(
+    serviceId: RecordId,
+    name: string | undefined,
+    method: string | undefined,
+    url: string | undefined,
+) {
+    const sets = [];
+    if (name) {
+        sets.push(`name=$name`);
+    }
+    if (method) {
+        sets.push(`method=$method`);
+    }
+    if (url) {
+        sets.push(`url=$url`);
+    }
+    return await queryOne<Service>(
+        `UPDATE service SET ${sets.join(", ")} WHERE id=$id`,
+        {
+            id: serviceId,
+            name,
+            method,
+            url,
+        },
+    );
+}
+
 export async function deleteService(serviceId: RecordId) {
     return await queryOne<Service>("DELETE service WHERE id=$id", {
         id: serviceId,

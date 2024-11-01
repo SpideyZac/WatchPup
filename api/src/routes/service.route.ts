@@ -4,6 +4,7 @@ import { rateLimit } from "express-rate-limit";
 import {
     create,
     deleteOwnedService,
+    editOwnedService,
     getOwned,
     getService,
 } from "#controllers/service.controller";
@@ -13,6 +14,7 @@ import { validateData } from "#middlewares/validate.middleware";
 import {
     CreateServiceScheme,
     DeleteServiceScheme,
+    EditServiceScheme,
     GetServiceScheme,
 } from "#schemas/service.scheme";
 
@@ -63,6 +65,23 @@ router.post(
     validateData(CreateServiceScheme),
     authMiddleware,
     create,
+);
+
+router.patch(
+    "/",
+    rateLimit({
+        windowMs: 5 * 1000,
+        limit: 1,
+        standardHeaders: true,
+        legacyHeaders: false,
+        validate: {
+            ip: false,
+        },
+    }),
+    validateData(EditServiceScheme),
+    authMiddleware,
+    createRecordId(["serviceId"]),
+    editOwnedService,
 );
 
 router.delete(

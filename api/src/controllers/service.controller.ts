@@ -7,6 +7,7 @@ import {
     createOwnsService,
     createService,
     deleteService,
+    editService,
     getOwnedServicesByUser,
 } from "#utils/database/service.database.util";
 import { getById } from "#utils/db.util";
@@ -81,6 +82,27 @@ export async function create(req: Request, res: Response) {
     }
 
     return res.status(201).json({ message: "Service created successfully" });
+}
+
+export async function editOwnedService(req: Request, res: Response) {
+    const user = (await getUserFromAccessToken(
+        (req.headers.authorization as string).split(" ")[1],
+    )) as User;
+    const { serviceId, name, method, url } = req.body;
+
+    if (!name && !method && !url) {
+        return res.status(400).json(createStandardError("No fields to edit"));
+    }
+
+    const services = await getOwnedServicesByUser(user);
+    if (!services.find((service) => service.id.id == serviceId.id)) {
+        return res
+            .status(400)
+            .json(createStandardError("User does not own service"));
+    }
+
+    await editService(serviceId, name, method, url);
+    return res.status(200).json({ message: "Service edited successfully" });
 }
 
 export async function deleteOwnedService(req: Request, res: Response) {
