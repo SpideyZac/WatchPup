@@ -1,5 +1,5 @@
 import type { User } from "#models/user.model";
-import type { Optional } from "#types/optional.types";
+import type { Optional } from "#types/optional.type";
 import { queryOne } from "#utils/db.util";
 
 export async function create(

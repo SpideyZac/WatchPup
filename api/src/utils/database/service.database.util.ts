@@ -3,7 +3,7 @@ import { RecordId } from "surrealdb";
 import type { OwnsService } from "#models/owns_service.model";
 import type { Service } from "#models/service.model";
 import type { User } from "#models/user.model";
-import type { Optional } from "#types/optional.types";
+import type { Optional } from "#types/optional.type";
 import { getById, queryOne } from "#utils/db.util";
 
 export async function getOwnedServicesByUser(user: User) {

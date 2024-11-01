@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 import type { User } from "#models/user.model";
-import type { Optional } from "#types/optional.types";
+import type { Optional } from "#types/optional.type";
 
 export function generateAccessToken(user: User, expiresIn: string): string {
     return jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
