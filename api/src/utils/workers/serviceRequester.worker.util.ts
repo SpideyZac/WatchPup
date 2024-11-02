@@ -6,7 +6,7 @@ import type { Optional } from "#types/optional.type";
 import { connect, db } from "#utils/db.util";
 
 const TIMEOUT_MS = 5000; // 5 second timeout
-const MAX_RESPONSE_SIZE = 1024 * 1024; // 1MB max response size
+const MAX_RESPONSE_SIZE = 1024; // 1 KB
 const CHECK_INTERVAL = 30 * 60 * 1000; // 30 minutes
 
 async function checkService(
