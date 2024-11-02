@@ -31,7 +31,9 @@ app.listen(PORT, async () => {
     await connect();
     console.info("Connected to the database");
 
-    const serviceRequesterWorker = new Worker("./src/utils/workers/serviceRequester.worker.util.ts");
+    const serviceRequesterWorker = new Worker(
+        "./src/utils/workers/serviceRequester.worker.util.ts",
+    );
     serviceRequesterWorker.postMessage({ type: "init", payload: {} });
 
     console.info("Service requester worker started");

@@ -1,15 +1,17 @@
 declare let self: Worker;
 
-import { db, connect } from "#utils/db.util";
-import type { Service } from "#models/service.model";
 import type { Request } from "#models/request.model";
+import type { Service } from "#models/service.model";
 import type { Optional } from "#types/optional.type";
+import { connect, db } from "#utils/db.util";
 
 const TIMEOUT_MS = 5000; // 5 second timeout
 const MAX_RESPONSE_SIZE = 1024 * 1024; // 1MB max response size
 const CHECK_INTERVAL = 30 * 60 * 1000; // 30 minutes
 
-async function checkService(service: Service): Promise<Optional<Request, "id"> | string> {
+async function checkService(
+    service: Service,
+): Promise<Optional<Request, "id"> | string> {
     const startTime = performance.now();
 
     try {
@@ -57,7 +59,7 @@ async function checkService(service: Service): Promise<Optional<Request, "id"> |
             response_time: Math.round(endTime - startTime),
             status: response.status,
         };
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
         let errorMessage: string;
 
@@ -75,24 +77,29 @@ async function checkService(service: Service): Promise<Optional<Request, "id"> |
 
 async function monitorServices() {
     try {
-        const services = (await db.query<Service[][]>(
-            "SELECT * FROM service",
-        ))[0];
+        const services = (
+            await db.query<Service[][]>("SELECT * FROM service")
+        )[0];
 
         for (const service of services) {
             const request = await checkService(service);
 
             if (typeof request !== "string") {
                 const response = request as Request;
-                const requestDb = (await db.query<Request[][]>("CREATE request CONTENT $content", {
-                    content: {
-                        created_at: response.created_at,
-                        headers: response.headers,
-                        response: response.response,
-                        response_time: response.response_time,
-                        status: response.status,
-                    }
-                }))[0][0];
+                const requestDb = (
+                    await db.query<Request[][]>(
+                        "CREATE request CONTENT $content",
+                        {
+                            content: {
+                                created_at: response.created_at,
+                                headers: response.headers,
+                                response: response.response,
+                                response_time: response.response_time,
+                                status: response.status,
+                            },
+                        },
+                    )
+                )[0][0];
                 await db.query("RELATE $in->requested_service->$out", {
                     in: requestDb.id,
                     out: service.id,
