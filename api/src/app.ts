@@ -30,4 +30,9 @@ app.listen(PORT, async () => {
     console.info(`Server is running on http://localhost:${PORT}`);
     await connect();
     console.info("Connected to the database");
+
+    const serviceRequesterWorker = new Worker("./src/utils/workers/serviceRequester.worker.util.ts");
+    serviceRequesterWorker.postMessage({ type: "init", payload: {} });
+
+    console.info("Service requester worker started");
 });
