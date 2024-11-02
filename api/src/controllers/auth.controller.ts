@@ -34,6 +34,7 @@ export async function signup(req: Request, res: Response) {
         return res.status(500).json({ message: "Failed to create user" });
     }
 
+    console.info(`User ${username} created`);
     return res.status(201).json({ message: "User created successfully" });
 }
 
@@ -67,6 +68,7 @@ export async function login(req: Request, res: Response) {
 
     const accessToken = generateAccessToken(dbUser, "1d");
 
+    console.info(`User ${dbUser.username} logged in`);
     return res
         .status(200)
         .json({ message: "Logged in successfully", accessToken });

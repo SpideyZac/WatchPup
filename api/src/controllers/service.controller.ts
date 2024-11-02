@@ -31,6 +31,7 @@ export async function getService(req: Request, res: Response) {
             .json(createStandardError("User does not own service"));
     }
 
+    console.info(`User ${user.id} fetched service ${serviceId}`);
     return res.status(200).json({ service });
 }
 
@@ -40,6 +41,7 @@ export async function getOwned(req: Request, res: Response) {
     )) as User;
 
     const services = await getOwnedServicesByUser(user);
+    console.info(`User ${user.id} fetched owned services`);
     return res.status(200).json({ services });
 }
 
@@ -81,6 +83,7 @@ export async function create(req: Request, res: Response) {
             );
     }
 
+    console.info(`User ${user.id} created service ${service[0].id}`);
     return res.status(201).json({ message: "Service created successfully" });
 }
 
@@ -102,6 +105,7 @@ export async function editOwnedService(req: Request, res: Response) {
     }
 
     await editService(serviceId, name, method, url);
+    console.info(`User ${user.id} edited service ${serviceId}`);
     return res.status(200).json({ message: "Service edited successfully" });
 }
 
@@ -119,5 +123,6 @@ export async function deleteOwnedService(req: Request, res: Response) {
     }
 
     await deleteService(serviceId);
+    console.info(`User ${user.id} deleted service ${serviceId}`);
     return res.status(200).json({ message: "Service deleted successfully" });
 }

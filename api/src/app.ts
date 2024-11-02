@@ -35,6 +35,11 @@ app.listen(PORT, async () => {
         "./src/utils/workers/serviceRequester.worker.util.ts",
     );
     serviceRequesterWorker.postMessage({ type: "init", payload: {} });
-
     console.info("Service requester worker started");
+
+    const requestExpirerWorker = new Worker(
+        "./src/utils/workers/requestExpirer.worker.util.ts",
+    );
+    requestExpirerWorker.postMessage({ type: "init", payload: {} });
+    console.info("Request expirer worker started");
 });

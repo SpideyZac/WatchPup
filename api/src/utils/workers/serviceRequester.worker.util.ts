@@ -3,11 +3,8 @@ declare let self: Worker;
 import type { Request } from "#models/request.model";
 import type { Service } from "#models/service.model";
 import type { Optional } from "#types/optional.type";
+import { config } from "#utils/config.util";
 import { connect, db } from "#utils/db.util";
-
-const TIMEOUT_MS = 5000; // 5 second timeout
-const MAX_RESPONSE_SIZE = 256; // 256 bytes
-const CHECK_INTERVAL = 30 * 60 * 1000; // 30 minutes
 
 async function checkService(
     service: Service,
@@ -16,7 +13,10 @@ async function checkService(
 
     try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_MS);
+        const timeoutId = setTimeout(
+            () => controller.abort(),
+            config.requests.maxTimeout,
+        );
 
         const response = await fetch(service.url, {
             method: service.method,
@@ -43,7 +43,7 @@ async function checkService(
             }
 
             totalSize += value.byteLength;
-            if (totalSize > MAX_RESPONSE_SIZE) {
+            if (totalSize > config.requests.maxResponseSize) {
                 throw new Error("Response too large");
             }
 
@@ -82,9 +82,13 @@ async function monitorServices() {
         )[0];
 
         for (const service of services) {
+            console.info(`Checking service ${service.url}`);
             const request = await checkService(service);
 
             if (typeof request !== "string") {
+                console.info(
+                    `Service ${service.url} responded in ${request.response_time}ms with status ${request.status}`,
+                );
                 const response = request as Request;
                 const requestDb = (
                     await db.query<Request[][]>(
@@ -117,7 +121,7 @@ self.addEventListener("message", async (event) => {
     switch (type) {
         case "init":
             await connect();
-            setInterval(monitorServices, CHECK_INTERVAL);
+            setInterval(monitorServices, config.requests.checkInterval);
             monitorServices();
             break;
         case "checkNow":
