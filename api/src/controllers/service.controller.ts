@@ -1,4 +1,5 @@
 import type { Request, Response } from "express";
+import type { RecordId } from "surrealdb";
 
 import type { User } from "#models/user.model";
 import { getUserFromAccessToken } from "#utils/auth.util";
@@ -17,7 +18,8 @@ export async function getService(req: Request, res: Response) {
     const user = (await getUserFromAccessToken(
         (req.headers.authorization as string).split(" ")[1],
     )) as User;
-    const { serviceId } = req.body;
+    // @ts-expect-error serviceId is converted to RecordId
+    const { serviceId } = req.query as { serviceId: RecordId };
 
     const service = await getById(serviceId);
     if (!service) {
