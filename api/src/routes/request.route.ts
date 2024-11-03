@@ -2,10 +2,10 @@ import { Router } from "express";
 import { rateLimit } from "express-rate-limit";
 
 import { getRequest } from "#controllers/request.controller";
+import { authMiddleware } from "#middlewares/auth.middleware";
+import { createRecordId } from "#middlewares/id.middleware";
 import { validateData } from "#middlewares/validate.middleware";
 import { GetRequestScheme } from "#schemas/request.scheme";
-import { createRecordId } from "#middlewares/id.middleware";
-import { authMiddleware } from "#middlewares/auth.middleware";
 
 export const router = Router();
 

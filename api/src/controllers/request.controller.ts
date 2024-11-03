@@ -1,11 +1,11 @@
 import type { Request, Response } from "express";
 
-import type { User } from "#models/user.model";
 import type { Request as RequestModel } from "#models/request.model";
+import type { User } from "#models/user.model";
 import { getUserFromAccessToken } from "#utils/auth.util";
+import { doesUserOwnRequest } from "#utils/database/request.database.util";
 import { getById } from "#utils/db.util";
 import { createStandardError } from "#utils/standard.util";
-import { doesUserOwnRequest } from "#utils/database/request.database.util";
 import type { RecordId } from "surrealdb";
 
 export async function getRequest(req: Request, res: Response) {
@@ -23,7 +23,9 @@ export async function getRequest(req: Request, res: Response) {
 
     const ownsRequest = await doesUserOwnRequest(user, requestId);
     if (!ownsRequest) {
-        return res.status(403).json(createStandardError("You do not own this request"));
+        return res
+            .status(403)
+            .json(createStandardError("You do not own this request"));
     }
 
     console.info(`User ${user.id} fetched request ${requestId}`);

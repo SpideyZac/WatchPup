@@ -42,3 +42,7 @@ export const EditServiceScheme = z.object({
 export const DeleteServiceScheme = z.object({
     serviceId: z.string().max(255),
 });
+
+export const GetRequests = z.object({
+    serviceId: z.string().max(255),
+});

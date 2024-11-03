@@ -6,6 +6,7 @@ import {
     deleteOwnedService,
     editOwnedService,
     getOwned,
+    getRequests,
     getService,
 } from "#controllers/service.controller";
 import { authMiddleware } from "#middlewares/auth.middleware";
@@ -15,6 +16,7 @@ import {
     CreateServiceScheme,
     DeleteServiceScheme,
     EditServiceScheme,
+    GetRequests,
     GetServiceScheme,
 } from "#schemas/service.scheme";
 
@@ -99,4 +101,21 @@ router.delete(
     authMiddleware,
     createRecordId(["serviceId"]),
     deleteOwnedService,
+);
+
+router.get(
+    "/requests",
+    rateLimit({
+        windowMs: 1000,
+        limit: 5,
+        standardHeaders: true,
+        legacyHeaders: false,
+        validate: {
+            ip: false,
+        },
+    }),
+    validateData(GetRequests),
+    authMiddleware,
+    createRecordId(["serviceId"]),
+    getRequests,
 );

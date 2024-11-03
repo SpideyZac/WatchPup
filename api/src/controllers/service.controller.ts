@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
 import type { RecordId } from "surrealdb";
 
+import type { Service } from "#models/service.model";
 import type { User } from "#models/user.model";
 import { getUserFromAccessToken } from "#utils/auth.util";
 import { config } from "#utils/config.util";
@@ -10,6 +11,7 @@ import {
     deleteService,
     editService,
     getOwnedServicesByUser,
+    getRequestsByService,
 } from "#utils/database/service.database.util";
 import { getById } from "#utils/db.util";
 import { createStandardError } from "#utils/standard.util";
@@ -127,4 +129,28 @@ export async function deleteOwnedService(req: Request, res: Response) {
     await deleteService(serviceId);
     console.info(`User ${user.id} deleted service ${serviceId}`);
     return res.status(200).json({ message: "Service deleted successfully" });
+}
+
+export async function getRequests(req: Request, res: Response) {
+    const user = (await getUserFromAccessToken(
+        (req.headers.authorization as string).split(" ")[1],
+    )) as User;
+    // @ts-expect-error serviceId is converted to RecordId
+    const { serviceId } = req.query as { serviceId: RecordId };
+
+    const services = await getOwnedServicesByUser(user);
+    if (!services.find((service) => service.id.id == serviceId.id)) {
+        return res
+            .status(400)
+            .json(createStandardError("User does not own service"));
+    }
+
+    const service = await getById<Service>(serviceId);
+    if (!service) {
+        return res.status(400).json(createStandardError("Service not found"));
+    }
+
+    const requests = await getRequestsByService(service);
+    console.info(`User ${user.id} fetched requests for service ${serviceId}`);
+    return res.status(200).json({ requests });
 }

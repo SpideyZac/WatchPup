@@ -1,6 +1,7 @@
 import { RecordId } from "surrealdb";
 
 import type { OwnsService } from "#models/owns_service.model";
+import type { RequestedService } from "#models/requested_service.model";
 import type { Service } from "#models/service.model";
 import type { User } from "#models/user.model";
 import type { Optional } from "#types/optional.type";
@@ -18,6 +19,17 @@ export async function getOwnedServicesByUser(user: User) {
         services.push(service);
     }
     return services;
+}
+
+export async function getRequestsByService(service: Service) {
+    const requestedServices = await queryOne<RequestedService>(
+        "SELECT * FROM requested_service WHERE out = $id",
+        {
+            id: service.id,
+        },
+    );
+
+    return requestedServices.map((request) => request.in.toString());
 }
 
 export async function createService(
