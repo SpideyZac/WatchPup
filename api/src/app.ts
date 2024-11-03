@@ -1,5 +1,7 @@
 import cookieParser from "cookie-parser";
 import express from "express";
+import helmet from "helmet";
+import hpp from "hpp";
 
 import { router } from "#routes/router";
 import { connect } from "#utils/db.util";
@@ -21,6 +23,8 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(helmet());
+app.use(hpp());
 
 app.use("/api", router);
 
