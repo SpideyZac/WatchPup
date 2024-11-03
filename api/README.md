@@ -1,15 +1,42 @@
-# watchpup-api
+# Prerequisites
+* [SurrealDB version 2.0.4](https://surrealdb.com/docs/surrealdb/installation)
+* [Bun](https://bun.sh/docs/installation)
 
-To install dependencies:
+# Installation
 
+Install the dependencies
 ```bash
 bun install
 ```
 
-To run:
+Create .env file (or you can just set the environment variables in your shell)
+* DB_PRIVATE_URL - The URL/URI of the SurrealDB instance
+* DB_NAMESPACE - The namespace of the DB
+* DB_DATABASE - The database within the `DB_NAMESPACE`
+* DB_USER - The user account to sign in with
+* DB_PASSWORD - The password of the `DB_USER` to sign in with
+* JWT_SECRET - Your JWT secret used for encoding access tokens
 
-```bash
-bun run ./src/app.ts
+Example:
+```
+DB_PRIVATE_URL="ws:localhost:8000"
+DB_NAMESPACE="db"
+DB_DATABASE="db"
+DB_USER="root"
+DB_PASSWORD="root"
+JWT_SECRET="secret"
 ```
 
-This project was created using `bun init` in bun v1.1.26. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+# Running
+
+For development:
+```bash
+bun run dev
+```
+
+For production:
+```bash
+bun run clean:build
+bun run build
+bun run start
+```

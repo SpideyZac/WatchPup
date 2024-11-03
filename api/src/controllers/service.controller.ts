@@ -138,16 +138,16 @@ export async function getRequests(req: Request, res: Response) {
     // @ts-expect-error serviceId is converted to RecordId
     const { serviceId } = req.query as { serviceId: RecordId };
 
+    const service = await getById<Service>(serviceId);
+    if (!service) {
+        return res.status(400).json(createStandardError("Service not found"));
+    }
+
     const services = await getOwnedServicesByUser(user);
     if (!services.find((service) => service.id.id == serviceId.id)) {
         return res
             .status(400)
             .json(createStandardError("User does not own service"));
-    }
-
-    const service = await getById<Service>(serviceId);
-    if (!service) {
-        return res.status(400).json(createStandardError("Service not found"));
     }
 
     const requests = await getRequestsByService(service);
