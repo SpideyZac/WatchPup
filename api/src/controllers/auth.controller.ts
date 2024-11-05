@@ -8,6 +8,7 @@ import {
 import type { User } from "#models/user.model";
 import { create } from "#utils/database/user.database.util";
 import { queryOne } from "#utils/db.util";
+import { createStandardError } from "#utils/standard.util";
 
 export async function signup(req: Request, res: Response) {
     // TODO: Verify email
@@ -22,16 +23,16 @@ export async function signup(req: Request, res: Response) {
         },
     );
     if (foundUser.length > 0) {
-        return res.status(400).json({
-            message: "User with that email or username already exists",
-        });
+        return res.status(400).json(createStandardError(
+            "User with that email or username already exists",
+        ));
     }
 
     const userData = await createUserData(email, password, username);
 
     const result = await create(userData);
     if (!result) {
-        return res.status(500).json({ message: "Failed to create user" });
+        return res.status(500).json(createStandardError("Failed to create user"));
     }
 
     console.info(`User ${username} created`);
@@ -51,7 +52,7 @@ export async function login(req: Request, res: Response) {
     if (foundUser.length === 0) {
         return res
             .status(400)
-            .json({ message: "Invalid username, email, or password" });
+            .json(createStandardError("Invalid username, email, or password"));
     }
 
     const dbUser = foundUser[0];
@@ -59,11 +60,11 @@ export async function login(req: Request, res: Response) {
     if (!passwordMatch) {
         return res
             .status(400)
-            .json({ message: "Invalid username, email, or password" });
+            .json(createStandardError("Invalid username, email, or password"));
     }
 
     if (!dbUser.verified) {
-        return res.status(400).json({ message: "User is not verified" });
+        return res.status(400).json(createStandardError("User is not verified"));
     }
 
     const accessToken = generateAccessToken(dbUser, "1d");
