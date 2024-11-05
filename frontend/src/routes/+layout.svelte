@@ -14,7 +14,7 @@
 				<!-- Logo -->
 				<div class="flex items-center gap-2">
 					<Dog class="h-8 w-8" />
-					<span class="text-lg font-bold">WatchPup</span>
+					<a href="/" class="text-lg font-bold">WatchPup</a>
 				</div>
 
 				<!-- Auth buttons -->
