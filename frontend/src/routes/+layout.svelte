@@ -3,7 +3,7 @@
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { Dog } from 'lucide-svelte';
 
-	let { children } = $props();
+	let { data, children } = $props();
 </script>
 
 <div class="flex h-screen flex-col justify-between bg-background">
@@ -18,10 +18,17 @@
 				</div>
 
 				<!-- Auth buttons -->
-				<div class="flex items-center gap-4">
-					<Button variant="ghost" href="/login">Log in</Button>
-					<Button href="/signup">Sign up</Button>
-				</div>
+				{#if !data.authToken}
+					<div class="flex items-center gap-4">
+						<Button variant="ghost" href="/login">Log in</Button>
+						<Button href="/signup">Sign up</Button>
+					</div>
+				{:else}
+					<div class="flex items-center gap-4">
+						<Button href="/dashboard">Dashboard</Button>
+						<Button variant="ghost" href="/logout">Log out</Button>
+					</div>
+				{/if}
 			</nav>
 		</div>
 	</div>

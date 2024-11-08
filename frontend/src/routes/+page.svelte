@@ -16,6 +16,11 @@
 			description: 'Analyze trends and optimize your services with detailed performance data'
 		}
 	];
+
+	export let data;
+	if (data.authToken) {
+		location.href = '/dashboard';
+	}
 </script>
 
 <main class="container mx-auto px-4 py-16">

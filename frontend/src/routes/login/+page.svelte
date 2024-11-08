@@ -12,13 +12,17 @@
 	import { enhance } from '$app/forms';
 
 	export let form;
+
+	function redirectToHome() {
+		location.href = '/';
+	}
 </script>
 
 <div class="flex min-h-[calc(100vh-64px)] items-center justify-center bg-background p-4">
 	<Card class="w-full max-w-md">
 		<CardHeader class="space-y-1 text-center">
-			<CardTitle class="text-2xl">Create an account</CardTitle>
-			<CardDescription>Enter your information below to create your account</CardDescription>
+			<CardTitle class="text-2xl">Login to your account</CardTitle>
+			<CardDescription>Enter your information below to login to your account</CardDescription>
 		</CardHeader>
 
 		<CardContent>
@@ -28,28 +32,19 @@
 						{form.error}
 					</div>
 				{:else if form?.success}
-					<div class="text-center text-sm font-medium">Account created successfully!</div>
+					<div class="text-center text-sm font-medium">
+						Successfully logged in
+						{redirectToHome()}
+					</div>
 				{/if}
 				<div class="space-y-2">
-					<Label for="email" class="block">Email</Label>
+					<Label for="user" class="block">Username or Email</Label>
 					<Input
-						id="email"
-						name="email"
-						type="email"
-						placeholder="name@company.com"
-						value={form?.email ?? ''}
-						required
-					/>
-				</div>
-
-				<div class="space-y-2">
-					<Label for="username" class="block">Username</Label>
-					<Input
-						id="username"
-						name="username"
+						id="user"
+						name="user"
 						type="text"
-						placeholder="example123"
-						value={form?.username ?? ''}
+						placeholder="name@company.com"
+						value={form?.user ?? ''}
 						required
 					/>
 				</div>
@@ -59,20 +54,15 @@
 					<Input id="password" name="password" type="password" required />
 				</div>
 
-				<div class="space-y-2">
-					<Label for="confirmPassword" class="block">Confirm password</Label>
-					<Input id="confirmPassword" name="confirmPassword" type="password" required />
-				</div>
-
-				<Button type="submit" class="w-full">Create account</Button>
+				<Button type="submit" class="w-full">Login</Button>
 
 				<div class="text-center text-sm text-muted-foreground">
-					Already have an account?{' '}
+					Don't have an account?{' '}
 					<a
-						href="/login"
+						href="/signup"
 						class="font-medium text-primary underline underline-offset-4 hover:text-primary/80"
 					>
-						Sign in
+						Signup
 					</a>
 				</div>
 			</form>
