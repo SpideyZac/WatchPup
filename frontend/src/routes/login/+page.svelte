@@ -14,7 +14,7 @@
 	export let form;
 
 	function redirectToHome() {
-		location.href = '/';
+		location.href = '/dashboard';
 	}
 </script>
 
