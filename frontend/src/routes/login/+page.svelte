@@ -45,13 +45,14 @@
 						type="text"
 						placeholder="name@company.com"
 						value={form?.user ?? ''}
+						max="255"
 						required
 					/>
 				</div>
 
 				<div class="space-y-2">
 					<Label for="password" class="block">Password</Label>
-					<Input id="password" name="password" type="password" required />
+					<Input id="password" name="password" type="password" max="255" required />
 				</div>
 
 				<Button type="submit" class="w-full">Login</Button>

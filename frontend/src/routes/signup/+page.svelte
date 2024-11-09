@@ -27,8 +27,6 @@
 					<div class="text-center text-sm font-medium text-destructive">
 						{form.error}
 					</div>
-				{:else if form?.success}
-					<div class="text-center text-sm font-medium">Account created successfully!</div>
 				{/if}
 				<div class="space-y-2">
 					<Label for="email" class="block">Email</Label>
@@ -38,6 +36,7 @@
 						type="email"
 						placeholder="name@company.com"
 						value={form?.email ?? ''}
+						max="255"
 						required
 					/>
 				</div>
@@ -50,18 +49,20 @@
 						type="text"
 						placeholder="example123"
 						value={form?.username ?? ''}
+						min="3"
+						max="16"
 						required
 					/>
 				</div>
 
 				<div class="space-y-2">
 					<Label for="password" class="block">Password</Label>
-					<Input id="password" name="password" type="password" required />
+					<Input id="password" name="password" type="password" max="255" required />
 				</div>
 
 				<div class="space-y-2">
 					<Label for="confirmPassword" class="block">Confirm password</Label>
-					<Input id="confirmPassword" name="confirmPassword" type="password" required />
+					<Input id="confirmPassword" name="confirmPassword" type="password" max="255" required />
 				</div>
 
 				<Button type="submit" class="w-full">Create account</Button>

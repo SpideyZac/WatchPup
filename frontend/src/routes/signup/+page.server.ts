@@ -47,8 +47,7 @@ export const actions = {
 				});
 			}
 
-			const data = await response.json();
-			return { success: true, data };
+			return redirect(300, '/login');
 		} catch (error) {
 			console.error('Signup error:', error);
 			return fail(500, {

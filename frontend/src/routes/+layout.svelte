@@ -34,7 +34,7 @@
 	</div>
 	{@render children()}
 	<!-- Footer -->
-	<footer class="px-4 text-muted-foreground sticky bottom-0">
+	<footer class="sticky bottom-0 px-4 text-muted-foreground">
 		<p>Copyright &copy; 2024 WatchPup. All Rights Reserved</p>
 	</footer>
 </div>
