@@ -1,7 +1,9 @@
+import { redirect } from '@sveltejs/kit';
+
 export function load({ cookies }) {
 	const authToken = cookies.get('token');
 
-	return {
-		authToken
-	};
+	if (authToken) {
+		redirect(300, '/dashboard');
+	}
 }
