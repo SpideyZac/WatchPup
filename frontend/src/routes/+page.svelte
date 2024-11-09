@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { Button } from '$lib/components/ui/button';
 	import { Card, CardHeader, CardTitle, CardDescription } from '$lib/components/ui/card';
 
@@ -16,6 +16,8 @@
 			description: 'Analyze trends and optimize your services with detailed performance data'
 		}
 	];
+
+	export let data;
 </script>
 
 <main class="container mx-auto px-4 py-16">
@@ -32,7 +34,11 @@
 		</p>
 
 		<div class="flex gap-4">
-			<Button size="lg" href="/signup">Get Started</Button>
+			{#if !data.authToken}
+				<Button size="lg" href="/signup">Get Started</Button>
+			{:else}
+				<Button size="lg" href="/dashboard">Dashboard</Button>
+			{/if}
 			<Button size="lg" variant="outline" href="https://github.com/SpideyZac/WatchPup"
 				>Docs/Github</Button
 			>
@@ -52,9 +58,11 @@
 		{/each}
 	</div>
 
-	<!-- CTA Section -->
-	<div class="mt-16 flex flex-col items-center space-y-4">
-		<h2 class="text-2xl font-bold">Ready to get started?</h2>
-		<Button size="lg" href="/signup">Create an Account</Button>
-	</div>
+	{#if !data.authToken}
+		<!-- CTA Section -->
+		<div class="mt-16 flex flex-col items-center space-y-4">
+			<h2 class="text-2xl font-bold">Ready to get started?</h2>
+			<Button size="lg" href="/signup">Create an Account</Button>
+		</div>
+	{/if}
 </main>

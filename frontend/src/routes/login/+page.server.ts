@@ -1,7 +1,13 @@
-import { fail } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 
 import { config } from '$lib/config';
+
+export async function load({ cookies }) {
+	if (cookies.get('token')) {
+		return redirect(300, '/dashboard');
+	}
+}
 
 export const actions = {
 	default: async ({ request, fetch, cookies }) => {
