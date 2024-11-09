@@ -15,8 +15,8 @@
                 {#each data.services as service}
                     <a href={`/service/${service.id}`}>
                         <Card>
-                            <CardHeader>
-                                <CardTitle>{service.name}</CardTitle>
+                            <CardHeader class="text-center mb-5">
+                                <CardTitle class="text-3xl">{service.name}</CardTitle>
                                 <CardDescription>{service.url}</CardDescription>
                             </CardHeader>
                         </Card>
