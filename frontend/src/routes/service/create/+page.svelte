@@ -52,8 +52,8 @@
 						name="name"
 						type="text"
 						placeholder="Service Name"
-						min="3"
-						max="35"
+						minlength={3}
+						maxlength={35}
 						required
 					/>
 				</div>
@@ -64,7 +64,7 @@
 						name="url"
 						type="url"
 						placeholder="https://example.com"
-						max="255"
+						maxlength={255}
 						required
 					/>
 				</div>

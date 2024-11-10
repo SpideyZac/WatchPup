@@ -24,8 +24,8 @@
 			</p>
 		</CardContent>
 		<CardFooter class="mt-6 flex justify-end gap-4">
-			<Button href={`/service/edit/${data.service.id}`} variant="default">Edit Service</Button>
-			<Button href={`/service/requests/${data.service.id}`} variant="default">View Requests</Button>
+			<Button href={`/service/edit/${data.service.service.id}`} variant="default">Edit Service</Button>
+			<Button href={`/service/requests/${data.service.service.id}`} variant="default">View Requests</Button>
 		</CardFooter>
 	</Card>
 </main>

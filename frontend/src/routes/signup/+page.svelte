@@ -36,7 +36,7 @@
 						type="email"
 						placeholder="name@company.com"
 						value={form?.email ?? ''}
-						max="255"
+						maxlength={255}
 						required
 					/>
 				</div>
@@ -49,20 +49,20 @@
 						type="text"
 						placeholder="example123"
 						value={form?.username ?? ''}
-						min="3"
-						max="16"
+						minlength={3}
+						maxlength={35}
 						required
 					/>
 				</div>
 
 				<div class="space-y-2">
 					<Label for="password" class="block">Password</Label>
-					<Input id="password" name="password" type="password" max="255" required />
+					<Input id="password" name="password" type="password" maxlength={35} required />
 				</div>
 
 				<div class="space-y-2">
 					<Label for="confirmPassword" class="block">Confirm password</Label>
-					<Input id="confirmPassword" name="confirmPassword" type="password" max="255" required />
+					<Input id="confirmPassword" name="confirmPassword" type="password" maxlength={35} required />
 				</div>
 
 				<Button type="submit" class="w-full">Create account</Button>
