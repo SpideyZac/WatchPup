@@ -13,7 +13,7 @@ router.get(
     "/",
     rateLimit({
         windowMs: 1000,
-        limit: 5,
+        limit: 50,
         standardHeaders: true,
         legacyHeaders: false,
         validate: {
