@@ -35,6 +35,7 @@ router.get(
     }),
     validateData(GetServiceScheme),
     authMiddleware,
+    createRecordId(["serviceId"]),
     getService,
 );
 
