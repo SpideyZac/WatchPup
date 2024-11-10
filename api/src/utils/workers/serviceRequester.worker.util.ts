@@ -82,12 +82,12 @@ async function monitorServices() {
         )[0];
 
         for (const service of services) {
-            console.info(`Checking service ${service.url}`);
+            console.info(`Checking service ${service.id}`);
             const request = await checkService(service);
 
             if (typeof request !== "string") {
                 console.info(
-                    `Service ${service.url} responded in ${request.response_time}ms with status ${request.status}`,
+                    `Service ${service.id} responded in ${request.response_time}ms with status ${request.status}`,
                 );
                 const response = request as Request;
                 const requestDb = (
@@ -108,6 +108,10 @@ async function monitorServices() {
                     in: requestDb.id,
                     out: service.id,
                 });
+            } else {
+                console.info(
+                    `Service ${service.id} failed with error: ${request}`,
+                );
             }
         }
     } catch (error) {

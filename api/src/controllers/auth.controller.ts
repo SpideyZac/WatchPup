@@ -23,16 +23,22 @@ export async function signup(req: Request, res: Response) {
         },
     );
     if (foundUser.length > 0) {
-        return res.status(400).json(createStandardError(
-            "User with that email or username already exists",
-        ));
+        return res
+            .status(400)
+            .json(
+                createStandardError(
+                    "User with that email or username already exists",
+                ),
+            );
     }
 
     const userData = await createUserData(email, password, username);
 
     const result = await create(userData);
     if (!result) {
-        return res.status(500).json(createStandardError("Failed to create user"));
+        return res
+            .status(500)
+            .json(createStandardError("Failed to create user"));
     }
 
     console.info(`User ${username} created`);
@@ -64,7 +70,9 @@ export async function login(req: Request, res: Response) {
     }
 
     if (!dbUser.verified) {
-        return res.status(400).json(createStandardError("User is not verified"));
+        return res
+            .status(400)
+            .json(createStandardError("User is not verified"));
     }
 
     const accessToken = generateAccessToken(dbUser, "1d");

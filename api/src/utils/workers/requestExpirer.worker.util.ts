@@ -6,19 +6,23 @@ import { connect, db } from "#utils/db.util";
 
 async function checkRequests(): Promise<void> {
     const timeToCheck = Date.now() - config.requests.requestLifetime;
+    const timeToCheckDate = new Date(timeToCheck);
     const requests = (
         await db.query<Request[][]>(
             "SELECT * FROM request WHERE created_at <= $time",
             {
-                time: new Date(timeToCheck),
+                time: timeToCheckDate,
             },
         )
     )[0];
 
     for (const request of requests) {
         console.info(`Request ${request.id} expired`);
-        await db.query("DELETE request WHERE id=$id", { id: request.id });
     }
+
+    await db.query("DELETE request WHERE created_at <= $time", {
+        time: timeToCheckDate,
+    });
 }
 
 self.addEventListener("message", async (event) => {
