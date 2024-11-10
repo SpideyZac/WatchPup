@@ -20,6 +20,7 @@
 		"@tailwindcss/forms": "^0.5.9",
 		"@tailwindcss/typography": "^0.5.15",
 		"@types/eslint": "^9.6.0",
+		"@types/node": "^22.9.0",
 		"autoprefixer": "^10.4.20",
 		"bits-ui": "^0.21.16",
 		"clsx": "^2.1.1",
@@ -40,7 +41,14 @@
 		"vite": "^5.0.3"
 	},
 	"dependencies": {
+		"@carbon/charts-svelte": "^1.22.0",
 		"frontend": ".",
-		"lucide-svelte": "^0.454.0"
-	}
+		"lucide-svelte": "^0.456.0",
+		"svelte-headless-table": "^0.18.3"
+	},
+	"trustedDependencies": [
+		"@sveltejs/kit",
+		"core-js",
+		"esbuild"
+	]
 }
