@@ -62,7 +62,13 @@
 
 				<div class="space-y-2">
 					<Label for="confirmPassword" class="block">Confirm password</Label>
-					<Input id="confirmPassword" name="confirmPassword" type="password" maxlength={35} required />
+					<Input
+						id="confirmPassword"
+						name="confirmPassword"
+						type="password"
+						maxlength={35}
+						required
+					/>
 				</div>
 
 				<Button type="submit" class="w-full">Create account</Button>
