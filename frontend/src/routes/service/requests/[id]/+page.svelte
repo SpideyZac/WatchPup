@@ -69,8 +69,8 @@
 		),
 		{
 			page: addPagination({
-                initialPageSize: 5,
-            })
+				initialPageSize: 5
+			})
 		}
 	);
 
