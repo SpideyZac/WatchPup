@@ -9,7 +9,7 @@ export function createRecordId(bodyKeys: string[]) {
         if (req.method !== "GET") {
             for (const key of bodyKeys) {
                 if (req.body[key]) {
-                    if (req.body[key].includes(":")) {
+                    if (!req.body[key].includes(":")) {
                         return res
                             .status(400)
                             .json(createStandardError("Invalid RecordId"));
