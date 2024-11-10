@@ -14,10 +14,13 @@
 	<Card>
 		<CardHeader class="text-center">
 			<CardTitle class="text-3xl">Dashboard</CardTitle>
+			<CardDescription class="text-muted-foreground">
+				Welcome to your dashboard. Here you can manage your services.
+			</CardDescription>
 		</CardHeader>
 		<CardContent>
 			<!-- Services section -->
-			<div class="mt-16 grid gap-6 md:grid-cols-3">
+			<div class="grid gap-6 md:grid-cols-3">
 				{#each data.services as service}
 					<a href={`/service/${service.id}`}>
 						<Card>
