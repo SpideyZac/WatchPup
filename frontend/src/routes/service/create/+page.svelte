@@ -27,6 +27,18 @@
 					</div>
 				{/if}
 				<div class="space-y-2">
+					<Label for="name" class="block">Name</Label>
+					<Input
+						id="name"
+						name="name"
+						type="text"
+						placeholder="Service Name"
+						minlength={3}
+						maxlength={35}
+						required
+					/>
+				</div>
+				<div class="space-y-2">
 					<Label for="method" class="block">Method</Label>
 					<select
 						id="method"
@@ -44,18 +56,6 @@
 						<option value="TRACE">TRACE</option>
 						<option value="PATCH">PATCH</option>
 					</select>
-				</div>
-				<div class="space-y-2">
-					<Label for="name" class="block">Name</Label>
-					<Input
-						id="name"
-						name="name"
-						type="text"
-						placeholder="Service Name"
-						minlength={3}
-						maxlength={35}
-						required
-					/>
 				</div>
 				<div class="space-y-2">
 					<Label for="url" class="block">URL</Label>

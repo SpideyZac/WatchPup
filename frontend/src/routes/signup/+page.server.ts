@@ -46,13 +46,12 @@ export const actions = {
 					username: username as string
 				});
 			}
-
-			return redirect(300, '/login');
 		} catch (error) {
 			console.error('Signup error:', error);
 			return fail(500, {
 				error: 'Internal server error'
 			});
 		}
+		return redirect(300, '/login');
 	}
 } satisfies Actions;

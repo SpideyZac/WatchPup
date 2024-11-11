@@ -26,7 +26,8 @@
 				{:else}
 					<div class="flex items-center gap-4">
 						<Button href="/dashboard">Dashboard</Button>
-						<Button variant="ghost" href="/logout">Log out</Button>
+						<Button variant="ghost" href="/logout" data-sveltekit-preload-data="tap">Log out</Button
+						>
 					</div>
 				{/if}
 			</nav>

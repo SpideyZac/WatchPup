@@ -30,8 +30,10 @@
 			<Button href={`/service/requests/${data.service.service.id}`} variant="default"
 				>View Requests</Button
 			>
-			<Button href={`/service/delete/${data.service.service.id}`} variant="destructive"
-				>Delete Service</Button
+			<Button
+				href={`/service/delete/${data.service.service.id}`}
+				data-sveltekit-preload-data="tap"
+				variant="destructive">Delete Service</Button
 			>
 		</CardFooter>
 	</Card>
